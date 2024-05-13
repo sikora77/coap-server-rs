@@ -79,8 +79,8 @@ impl ObserversHolder {
     ///
     /// `relative_path` is relative to the resource path that the [`crate::app::ObservableResource`]
     /// was installed at.
-    pub async fn get_count(&self) -> usize {
-		return self.inner.read().await.values().count();
+    pub async fn get_count(&self,relative_path:&str) -> usize {
+		return self.inner.read().await.match_all(&key_from_path(relative_path)).values().count();
 	}
     pub async fn notify_change_for_path(&self, relative_path: &str) {
         for result in self
